@@ -4,7 +4,7 @@ global $gBitSystem;
 $registerHash = array(
 	'package_name' => 'lcconfig',
 	'package_path' => dirname( __FILE__ ).'/',
-	'required_package'=> TRUE,
+	//	'required_package'=> TRUE,
 );
 $gBitSystem->registerPackage( $registerHash );
 
@@ -22,7 +22,7 @@ if( $gBitSystem->isPackageActive( 'lcconfig' ) ) {
 		),
 		array( 
 			'description' => 'Enables lcconfig format preferences',
-			'required' => TRUE,
+			//			'required' => TRUE,
 		)
 	);
 	require_once( 'LCConfig.php' );
