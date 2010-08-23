@@ -1,5 +1,21 @@
 <?php
 
+global $gBitSystem;
+
+$gBitSystem->registerPackageInfo( LCCONFIG_PKG_NAME, array(
+	'description' => "Liberty Content Type Configuration.",
+	'license' => '<a href="http://www.gnu.org/licenses/licenses.html#LGPL">LGPL</a>',
+));
+
+// Package requirements
+$gBitSystem->registerRequirements( LCCONFIG_PKG_NAME, array(
+	'liberty'   => array( 'min' => '2.1.0' ),
+));
+
+// Install process
+global $gBitInstaller;
+if( is_object( $gBitInstaller ) ){
+
 // Common Content tables
 $tables = array(
 
@@ -12,19 +28,8 @@ $tables = array(
 ",
 );
 
-global $gBitInstaller;
-
 foreach( array_keys( $tables ) AS $tableName ) {
 	$gBitInstaller->registerSchemaTable( LCCONFIG_PKG_NAME, $tableName, $tables[$tableName], TRUE );
 }
 
-$gBitInstaller->registerPackageInfo( LCCONFIG_PKG_NAME, array(
-	'description' => "Liberty Content Type Configuration.",
-	'license' => '<a href="http://www.gnu.org/licenses/licenses.html#LGPL">LGPL</a>',
-));
-
-// Package requirements
-$gBitInstaller->registerRequirements( LCCONFIG_PKG_NAME, array(
-	'liberty'   => array( 'min' => '2.1.0' ),
-));
-
+}
