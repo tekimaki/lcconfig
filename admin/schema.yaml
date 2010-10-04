@@ -1,0 +1,22 @@
+---
+lcconfig: 
+  version: 0.0.0
+  required: true
+  requirements: 
+    liberty: 
+      min: 2.1.0
+  description: Liberty Content Type Configuration.
+  license: 
+    name: LGPL
+    description: Licensed under the GNU LESSER GENERAL PUBLIC LICENSE.
+    url: http://www.gnu.org/copyleft/lesser.html
+  homeable: false
+  tables: 
+    lc_types_config: |
+      
+      config_name C(40) NOTNULL,
+      content_type_guid C(16) NOTNULL,
+      config_value C(250)
+      CONSTRAINT '
+      , CONSTRAINT `lc_type_guid_ref` FOREIGN KEY (`content_type_guid`) REFERENCES `liberty_content_types`( `content_type_guid` )
+      
