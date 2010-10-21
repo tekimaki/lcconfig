@@ -19,4 +19,16 @@ lcconfig:
       config_value C(250)
       CONSTRAINT '
       , CONSTRAINT `lc_type_guid_ref` FOREIGN KEY (`content_type_guid`) REFERENCES `liberty_content_types`( `content_type_guid` )
-      
+      '
+
+  plugins:
+    lcconfig:
+      name: Content Configuration
+      required: true
+      handler_file: LCConfig.php
+      description: Enables lcconfig format preferences
+      api_handlers:
+        function:
+          content_preview: lcconfig_content_edit
+          content_edit: lcconfig_content_edit
+          ontent_verify: lcconfig_content_verify

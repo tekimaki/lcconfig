@@ -12,6 +12,7 @@ if( $gBitSystem->isPackageActive( 'lcconfig' ) ) {
 	// service funcs
 	define( 'LIBERTY_SERVICE_LCCONFIG', 'content_config' );
 
+	/*
 	$gLibertySystem->registerService( 
 		LIBERTY_SERVICE_LCCONFIG, 
 		LCCONFIG_PKG_NAME, 
@@ -25,6 +26,8 @@ if( $gBitSystem->isPackageActive( 'lcconfig' ) ) {
 			//			'required' => TRUE,
 		)
 	);
+	*/
+
 	require_once( 'LCConfig.php' );
 	$LCConfig = LCConfig::getInstance();
 	$gBitSmarty->assign_by_ref( 'LCConfig', $LCConfig );
