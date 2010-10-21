@@ -6,11 +6,11 @@ require_once( '../LCConfig.php' );
 $LCConfig = LCConfig::getInstance();
 
 // sort services by required state and name to help make the table more legible
-foreach( $gLibertySystem->mServices as $sguid=>$serv ){
-	$required[$sguid] = $serv['required'];
+foreach( $gBitSystem->mPackagePluginsConfig as $sguid=>$splugin ){
+	$required[$sguid] = $splugin['required'];
 	$name[$sguid] = $sguid;
 }
-array_multisort( $required, SORT_ASC, $name, SORT_ASC, $gLibertySystem->mServices );
+array_multisort( $required, SORT_ASC, $name, SORT_ASC, $gBitSystem->mPackagePluginsConfig );
 
 // deal with service preferences
 if( !empty( $_REQUEST['save'] )) {
@@ -20,8 +20,8 @@ if( !empty( $_REQUEST['save'] )) {
 
 	// store prefs
 	foreach( array_keys( $gLibertySystem->mContentTypes ) as $ctype ) {
-		foreach( $gLibertySystem->mServices as $guid=>$service ) {
-			if( empty( $service['required'] ) ){
+		foreach( $gBitSystem->mPackagePluginsConfig as $guid=>$plugin ){
+			if( empty( $plugin['required'] ) ){
 				if( empty( $_REQUEST['service_guids'][$guid][$ctype] ) || $_REQUEST['service_guids'][$guid][$ctype] == 'y' ){
 					// for service config we actually store the negation, so remove a positive record to keep the db records light
 					$LCConfig->expungeConfig( 'service_'.$guid, $ctype );

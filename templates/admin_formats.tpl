@@ -50,7 +50,7 @@
 			</table>
 
 			<div class="submit">
-				<input type="submit" name="save" value="{tr}Apply Changes{/tr}" />
+				<input class="button" type="submit" name="save" value="{tr}Apply Changes{/tr}" />
 			</div>
 		{/form}
 	</div><!-- end .body -->
