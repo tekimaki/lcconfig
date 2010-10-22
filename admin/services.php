@@ -7,13 +7,13 @@ $LCConfig = LCConfig::getInstance();
 
 // sort services by required state and name to help make the table more legible
 foreach( $gBitSystem->mPackagePluginsConfig as $sguid=>$splugin ){
-	$required[$sguid] = $splugin['required'];
+	$required[$sguid] = $splugin['required'] == 'y'?TRUE:FALSE;
 	$name[$sguid] = $sguid;
 }
 array_multisort( $required, SORT_ASC, $name, SORT_ASC, $gBitSystem->mPackagePluginsConfig );
 
 // deal with service preferences
-if( !empty( $_REQUEST['save'] )) {
+if( !empty( $_REQUEST['save'] ) ) {
 	$gBitUser->verifyTicket();
 	$LCConfig->mDb->StartTrans();
 
@@ -22,9 +22,12 @@ if( !empty( $_REQUEST['save'] )) {
 	foreach( array_keys( $gLibertySystem->mContentTypes ) as $ctype ) {
 		foreach( $gBitSystem->mPackagePluginsConfig as $guid=>$plugin ){
 			if( empty( $plugin['required'] ) ){
-				if( empty( $_REQUEST['service_guids'][$guid][$ctype] ) || $_REQUEST['service_guids'][$guid][$ctype] == 'y' ){
-					// for service config we actually store the negation, so remove a positive record to keep the db records light
+				if( empty( $_REQUEST['service_guids'][$guid][$ctype] ) ){
+					// remove
 					$LCConfig->expungeConfig( 'service_'.$guid, $ctype );
+				}elseif( $_REQUEST['service_guids'][$guid][$ctype] == 'y' ){
+					// affirmative
+					$LCConfig->storeConfig( 'service_'.$guid, $ctype, $_REQUEST['service_guids'][$guid][$ctype] );
 				} else {
 					// for service config we actually store the negation or a special value
 					// valid params are 'n' and 'required'

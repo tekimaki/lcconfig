@@ -27,7 +27,7 @@
 							{tr}(pkg:{$plugin.package_guid|ucfirst}){/tr}<br />
 							{$plugin.description}
 						</td>
-						{if $plugin.required}
+						{if $plugin.required == 'y'}
 							<td colspan="{$gLibertySystem->mContentTypes|@count}" style="text-align:center"><em>This is a required service and should not be disabled</em></td>
 						{else}
 							{foreach from=$gLibertySystem->mContentTypes item=ctype key=p name=ctypes}
