@@ -21,7 +21,7 @@ if( !empty( $_REQUEST['save'] ) ) {
 	// store prefs
 	foreach( array_keys( $gLibertySystem->mContentTypes ) as $ctype ) {
 		foreach( $gBitSystem->mPackagePluginsConfig as $guid=>$plugin ){
-			if( empty( $plugin['required'] ) ){
+			if( empty( $plugin['required'] ) || $plugin['required'] == 'n' ){
 				if( empty( $_REQUEST['service_guids'][$guid][$ctype] ) ){
 					// remove
 					$LCConfig->expungeConfig( 'service_'.$guid, $ctype );
