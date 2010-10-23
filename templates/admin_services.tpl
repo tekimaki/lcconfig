@@ -34,9 +34,9 @@
 								{* create option for each ctype *}
 								<td class="aligncenter" style="width:25px; padding:0 15px">
 									<select name="service_guids[{$plugin_guid}][{$p}]" id="{$p}_{$plugin_guid}">
-										<option value="" 			{if !$LCConfigSettings.$p.$config_key}selected="selected"{/if}				>Include</option>
+										<option value="y" 			{if $LCConfigSettings.$p.$config_key eq 'y'}selected="selected"{/if}				>Include</option>
 										<option value="required" 	{if $LCConfigSettings.$p.$config_key eq 'required' }selected="selected"{/if}>Require</option>
-										<option value="n" 			{if $LCConfigSettings.$p.$config_key eq 'n'}selected="selected"{/if}		>Exclude</option>
+										<option value="n" 			{if empty( $LCConfigSettings.$p.$config_key ) || $LCConfigSettings.$p.$config_key eq 'n'}selected="selected"{/if}		>Exclude</option>
 									</select>
 								</td>
 							{/foreach}

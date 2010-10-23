@@ -40,10 +40,11 @@ class LCConfig extends BitBase {
 		return $this->loadConfig();
 	}
 
-	public function getConfig( $pName, $pContentTypeGuid, $pDefault = NULL ){
+	public function getConfig( $pName, $pContentTypeGuid, $pDefault = 'n' ){
 		if( empty( $this->mConfig ) ) {
 			$this->loadConfig();
 		}
+		// vd($this->mConfig);
 		// vd(  $this->mConfig[$pContentTypeGuid][$pName] );
 		return( empty( $this->mConfig[$pContentTypeGuid][$pName] ) ? $pDefault : $this->mConfig[$pContentTypeGuid][$pName] );
 	}

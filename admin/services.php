@@ -22,15 +22,11 @@ if( !empty( $_REQUEST['save'] ) ) {
 	foreach( array_keys( $gLibertySystem->mContentTypes ) as $ctype ) {
 		foreach( $gBitSystem->mPackagePluginsConfig as $guid=>$plugin ){
 			if( empty( $plugin['required'] ) || $plugin['required'] == 'n' ){
-				if( empty( $_REQUEST['service_guids'][$guid][$ctype] ) ){
+				if( $_REQUEST['service_guids'][$guid][$ctype] == 'n' ){
 					// remove
 					$LCConfig->expungeConfig( 'service_'.$guid, $ctype );
-				}elseif( $_REQUEST['service_guids'][$guid][$ctype] == 'y' ){
-					// affirmative
-					$LCConfig->storeConfig( 'service_'.$guid, $ctype, $_REQUEST['service_guids'][$guid][$ctype] );
 				} else {
-					// for service config we actually store the negation or a special value
-					// valid params are 'n' and 'required'
+					// affermative or required.
 					$LCConfig->storeConfig( 'service_'.$guid, $ctype, $_REQUEST['service_guids'][$guid][$ctype] );
 				}
 			}
