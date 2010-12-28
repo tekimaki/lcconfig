@@ -106,27 +106,31 @@ class LCConfig extends BitBase {
 
 function lcconfig_content_edit( &$pObject, &$pParamHash ){
 	global $gBitSystem, $gLibertySystem;
-	$LCConfig = LCConfig::getInstance();
-	$guids = $LCConfig->getAllConfig( $pObject->getContentType() );
-	if( !empty( $guids ) ){ 
-		foreach( $guids as $key=>$value ){
-			// look for format plugin values
-			if( substr( $key, 0, 7 ) == 'format_' ){
-				$guid = substr( $key, 7 );
-				if( !empty( $gLibertySystem->mPlugins[$guid] ) ){
-					// unset any matching formats from liberty system
-					// a little invasive but instantly effective on existing templates
-					// this would be a problem if one where editing multiple content on
-					// the same page and needed the full list of plugins
-					unset( $gLibertySystem->mPlugins[$guid] );
+	/*
+	if( !$pObject->isValid() || ( !empty( $pParamHash['format_guid'] ) && $pObject->mInfo['format_guid'] != $pParamHash['format_guid'] ) ){
+		$LCConfig = LCConfig::getInstance();
+		$guids = $LCConfig->getAllConfig( $pObject->getContentType() );
+		if( !empty( $guids ) ){ 
+			foreach( $guids as $key=>$value ){
+				// look for format plugin values
+				if( substr( $key, 0, 7 ) == 'format_' ){
+					$guid = substr( $key, 7 );
+					if( !empty( $gLibertySystem->mPlugins[$guid] ) ){
+						// unset any matching formats from liberty system
+						// a little invasive but instantly effective on existing templates
+						// this would be a problem if one where editing multiple content on
+						// the same page and needed the full list of plugins
+						unset( $gLibertySystem->mPlugins[$guid] );
+					}
 				}
-			}
-			// look for default format override
-			if( $key == 'default_format' && $value != $gBitSystem->getConfig( 'default_format' ) ){
-				$gBitSystem->setConfig( 'default_format', $value );
+				// look for default format override
+				if( $key == 'default_format' && $value != $gBitSystem->getConfig( 'default_format' ) ){
+					$gBitSystem->setConfig( 'default_format', $value );
+				}
 			}
 		}
 	}
+	 */
 }
 
 function lcconfig_content_verify( &$pObject, &$pParamHash ){

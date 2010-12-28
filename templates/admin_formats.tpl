@@ -40,7 +40,7 @@
 									(<span class='small'>{if $guid eq $system_default_format}system default{else}default{/if})</span>{html_radios values=$guid name=$default_config_key checked=$default_format}
 									{* we inverse the checked check since these are a negation of allowing the format type - present to user like things are normal *}
 									<input id="{$p}_{$plugin.plugin_guid}" type="checkbox" value="{$p}" name="plugin_guids[{$plugin.plugin_guid}][{$p}]" title="{$plugin.format_name}" 
-									{if !$LCConfigSettings.$p.$config_key}checked="checked"{/if}
+									{if $LCConfigSettings.$p.$config_key eq 'y'}checked="checked"{/if}
 									/>
 								</td>
 							{/if}

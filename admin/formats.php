@@ -16,20 +16,24 @@ if( !empty( $_REQUEST['save'] )) {
 				!empty( $plugin['edit_field'] ) &&
 				$plugin['plugin_type'] == 'format'){
 				if( !empty( $_REQUEST['plugin_guids'][$guid][$ctype] ) ) {
-					// for format config we actually store the negation, so remove a positive record to keep the db records light
-					$LCConfig->expungeConfig( 'format_'.$guid, $ctype );
+					// store format pref
+					$LCConfig->storeConfig( 'format_'.$guid, $ctype, 'y' );
 					// crude storage of custom default
-					if( !empty( $_REQUEST['default_format_'.$ctype] ) && $_REQUEST['default_format_'.$ctype] != $gBitSystem->getConfig('default_format') ){
-						$LCConfig->storeConfig( 'default_format', $ctype, $guid );
+					if( !empty( $_REQUEST['default_format_'.$ctype] ) ){ // && $_REQUEST['default_format_'.$ctype] != $gBitSystem->getConfig('default_format') ){
+						// if no default is set make sure we remove it incase it was set before
+						if( $_REQUEST['default_format_'.$ctype] == $guid ){ 
+							$LCConfig->storeConfig( 'default_format', $ctype, $guid );
+						}
 					}else{
-						// if not set make sure we remove it incase it was set before
+						// if no default is set make sure we remove it incase it was set before
 						$LCConfig->expungeConfig( 'default_format', $ctype );
 					}
 				} else {
-					// for format config we actually store the negation
 					$LCConfig->storeConfig( 'format_'.$guid, $ctype, 'n' );
 					// if format is not supported it can't be the default
-					$LCConfig->expungeConfig( 'default_format', $ctype );
+					if( empty( $_REQUEST['default_format_'.$ctype] ) || $_REQUEST['default_format_'.$ctype] == $guid ){
+						$LCConfig->expungeConfig( 'default_format', $ctype );
+					}
 					if( !empty( $_REQUEST['default_format_'.$ctype] ) && $_REQUEST['default_format_'.$ctype] == $guid ){
 						$feedback['error'] = tra( 'You can not select the disabled format '.$plugin['edit_label'].' as the default format. Please choose another for content type '.$ctype );
 					}
